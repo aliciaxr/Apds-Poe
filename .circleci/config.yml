@@ -6,7 +6,7 @@ orbs:
 jobs:
   say-hello:
     docker:
-      - image: cimg/base:current
+      - image: cimg/base:current  # Base image
     steps:
       - checkout
       - run:
@@ -14,26 +14,28 @@ jobs:
           command: "echo Hello, World!"
 
   sonarqube:
-    working_directory: ~/build
     docker:
-      - image: circleci/python:3.9  # Switch to a more complete image
-    resource_class: small
+      - image: cimg/base:current  # Base image for your job
     steps:
+      - checkout
       - run:
-          name: "Install find command"
+          name: Install SonarScanner
           command: |
-            sudo apt-get update && sudo apt-get install -y findutils  # Run with sudo to get root privileges
+            curl -sS https://downloads.sonarsource.com/sonar-scanner-cli/sonar-scanner-5.0.1-linux.zip -o sonar-scanner.zip
+            unzip sonar-scanner.zip -d /opt
+            export PATH=$PATH:/opt/sonar-scanner-5.0.1-linux/bin
+            sonar-scanner --version
+
       - run:
-          name: "Find files"
+          name: Find files (Optional)
           command: "find ."
-      - attach_workspace:
-          at: ~/workspace
+
       - run:
-          name: "Run SonarScanner"
+          name: Run SonarScanner
           command: |
             SONAR_BRANCH="${CIRCLE_BRANCH:-master}"
             echo "Sonar branch value is : " $SONAR_BRANCH
-            echo "Sonar org value is: "$SONAR_ORG
+            echo "Sonar org value is: $SONAR_ORG"
             sonar-scanner \
               -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
               -Dsonar.organization="$SONAR_ORG" \
@@ -44,7 +46,10 @@ jobs:
               -Dsonar.sources="."
 
 workflows:
+  version: 2
   say-hello-workflow:
     jobs:
       - say-hello
-      - sonarqube
+      - sonarqube:
+          requires:
+            - say-hello
