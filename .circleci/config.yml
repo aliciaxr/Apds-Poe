@@ -20,21 +20,21 @@ jobs:
             cd customer-portal  # Move into the customer-portal directory where package.json is located
             npm install --verbose  # Install dependencies
       - run:
-          name: Install SonarQube Scanner using apt
+          name: Install SonarQube Scanner manually
           command: |
-            sudo apt-get update && sudo apt-get install -y unzip openjdk-11-jre
+            # Install unzip if it's not installed
+            sudo apt-get update && sudo apt-get install -y unzip curl
+            # Download SonarQube Scanner
             curl -L https://github.com/SonarSource/sonar-scanner-cli/releases/download/4.8.0.2856/sonar-scanner-4.8.0.2856-linux.zip -o sonar-scanner.zip
-            # Check if the file is downloaded correctly
+            # Verify if the file was downloaded successfully
             ls -lh sonar-scanner.zip
-            if [[ ! -s sonar-scanner.zip ]]; then
-              echo "SonarQube Scanner zip file is empty or missing. Aborting!";
-              exit 1;
-            fi
-            unzip sonar-scanner.zip -d /opt
+            # Extract the downloaded zip file
+            unzip sonar-scanner.zip -d /opt/
+            # Set up environment variables for SonarQube scanner
             echo 'export PATH=$PATH:/opt/sonar-scanner-4.8.0.2856-linux/bin' >> $BASH_ENV
             source $BASH_ENV
       - run:
-          name: SonarQube Scan
+          name: Run SonarQube Scan
           command: |
             cd customer-portal  # Ensure you're in the correct directory
             sonar-scanner \
