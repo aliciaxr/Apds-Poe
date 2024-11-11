@@ -22,8 +22,11 @@ jobs:
       - run:
           name: Install SonarQube Scanner
           command: |
-            # Install sonar-scanner
-            curl -sS https://downloads.sonarsource.com/sonar-scanner-cli/sonar-scanner-4.8.0.2856-linux.zip -o sonar-scanner.zip
+            # Download the correct version of sonar-scanner
+            curl -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-4.8.0.2856-linux.zip -o sonar-scanner.zip
+            # Verify the download was successful
+            ls -alh sonar-scanner.zip
+            # Unzip the sonar-scanner package
             unzip sonar-scanner.zip -d /opt
             echo 'export PATH=$PATH:/opt/sonar-scanner-4.8.0.2856-linux/bin' >> $BASH_ENV
             source $BASH_ENV
