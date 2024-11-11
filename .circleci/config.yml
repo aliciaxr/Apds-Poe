@@ -1,14 +1,11 @@
 version: 2.1
 
-orbs:
-  sonarcloud: sonarsource/sonarcloud@2.0.0  # Using the correct version of the SonarCloud orb
-
 jobs:
   build:
     docker:
-      - image: cimg/node:18.0  # Ensure you're using a compatible version of Node.js
+      - image: cimg/node:18.0
     steps:
-      - checkout  # Check out the repository to CircleCI workspace
+      - checkout
       - run:
           name: List files in the root directory
           command: |
@@ -21,12 +18,13 @@ jobs:
           name: Install dependencies in customer-portal
           command: |
             cd /home/circleci/project/customer-portal && npm install  # Install dependencies from customer-portal
-      - sonarcloud/scan:
-          # The orb will automatically pick up the configuration from sonar-project.properties in the root directory
-          # No need to specify projectKey or organization if they are set in your environment variables
+      - sonarcloud/scan
+
+orbs:
+  sonarcloud: sonarsource/sonarcloud@2.0.0
 
 workflows:
   main:
     jobs:
       - build:
-          context: SonarCloud  # Ensure SonarCloud context is correctly set up in CircleCI (for environment variables)
+          context: SonarCloud
