@@ -6,15 +6,17 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/node:16.20
+      - image: cimg/node:18.0  # Update Node.js version to >=18
     steps:
-      - checkout  # Checkout your repo to ensure we have the code
+      - checkout  # Checkout the repository to CircleCI's workspace
+      - run:
+          name: List files and verify customer-portal directory
+          command: |
+            ls -al  # List all files and directories to ensure 'customer-portal' exists
       - run:
           name: Install dependencies in customer-portal
           command: |
-            # Make sure we're in the correct directory
-            ls -al  # List files to verify the directory structure (optional, for debugging)
-            cd customer-portal && npm install  # Navigate to customer-portal directory and install dependencies
+            cd customer-portal && npm install  # Change directory and install dependencies
             cd customer-portal && npm run build  # Build the project from the customer-portal directory
       - sonarcloud/scan  # Run SonarCloud scan after the build
 
