@@ -19,11 +19,14 @@ jobs:
           command: |
             cd customer-portal  # Move into the customer-portal directory where package.json is located
             npm install --verbose  # Install dependencies
-      # - run:
-      #     name: Run Tests
-      #     command: |
-      #       cd customer-portal  # Ensure you're in the correct directory
-      #       npm test
+      - run:
+          name: Install SonarQube Scanner
+          command: |
+            # Install sonar-scanner
+            curl -sS https://downloads.sonarsource.com/sonar-scanner-cli/sonar-scanner-4.8.0.2856-linux.zip -o sonar-scanner.zip
+            unzip sonar-scanner.zip -d /opt
+            echo 'export PATH=$PATH:/opt/sonar-scanner-4.8.0.2856-linux/bin' >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: SonarQube Scan
           command: |
