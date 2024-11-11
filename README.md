@@ -3,6 +3,7 @@
 
 This project utilizes **SonarQube**, **CircleCI**, and **GitHub Actions** to streamline development by automating tests, building the application, 
 and analyzing code quality. The main objective is to ensure high code quality standards and an automated workflow for deployment.
+This can be found on the branch : circle-project-setup.
 
 -------------------------------------------------------------------------------------------------------------------------------------------
 ## Technologies Used
