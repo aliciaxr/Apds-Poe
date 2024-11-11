@@ -22,8 +22,8 @@ jobs:
           command: |
             cd /home/circleci/project/customer-portal && npm install  # Install dependencies from customer-portal
       - sonarcloud/scan:
-          projectKey: ${SONAR_PROJECT_KEY}  # Referencing SONAR_PROJECT_KEY from CircleCI environment variables
-          organization: ${SONAR_ORG_KEY}       # Referencing SONAR_ORG from CircleCI environment variables
+          # No need to pass projectKey and organization here
+          # SonarCloud will use the values from CircleCI environment variables or sonar-project.properties
 
 workflows:
   main:
