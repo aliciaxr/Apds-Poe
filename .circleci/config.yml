@@ -21,7 +21,6 @@ jobs:
           name: Install dependencies in customer-portal
           command: |
             cd /home/circleci/project/customer-portal && npm install  # Install dependencies from customer-portal
-            cd /home/circleci/project/customer-portal && npm run build  # Build the project inside customer-portal
       - sonarcloud/scan  # Run SonarCloud scan after the build
 
 workflows:
