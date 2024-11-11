@@ -22,7 +22,7 @@ jobs:
       - run:
           name: "Install find command"
           command: |
-            apt-get update && apt-get install -y findutils  # This will work now, as the image includes apt-get
+            sudo apt-get update && sudo apt-get install -y findutils  # Run with sudo to get root privileges
       - run:
           name: "Find files"
           command: "find ."
