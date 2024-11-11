@@ -16,13 +16,13 @@ jobs:
   sonarqube:
     working_directory: ~/build
     docker:
-      - image: sonarsource/sonar-scanner-cli
+      - image: circleci/python:3.9  # Switch to a more complete image
     resource_class: small
     steps:
       - run:
           name: "Install find command"
           command: |
-            apk update && apk add findutils
+            apt-get update && apt-get install -y findutils  # This will work now, as the image includes apt-get
       - run:
           name: "Find files"
           command: "find ."
