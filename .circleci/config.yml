@@ -7,13 +7,13 @@ jobs:
   build:
     docker:
       - image: cimg/node:16.14
-    working_directory: customer-portal  # Update this to point to customer-portal
+    working_directory: ~/customer-portal  
     steps:
       - checkout
       - run:
           name: Install dependencies and build project
           command: |
-            npm install  
+            npm install 
             npm run build  
       - sonarcloud/scan
 
