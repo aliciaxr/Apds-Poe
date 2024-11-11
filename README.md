@@ -9,13 +9,17 @@ This can be found on the branch : circle-project-setup.
 ## Technologies Used
 
 - **SonarQube** for code quality analysis
+
 ![Screenshot 2024-11-11 230931](https://github.com/user-attachments/assets/1d073099-9ea3-4706-9d07-4c976a663aad)
 ![Screenshot 2024-11-11 230959](https://github.com/user-attachments/assets/ee2a8851-90d0-49f0-a1bd-d6023b4e78c0)
 - **CircleCI** for continuous integration and testing
+
 ![Screenshot 2024-11-11 230845](https://github.com/user-attachments/assets/eb03fb23-ba4b-49fd-b394-8a827124cb37)
 ![Screenshot 2024-11-11 230859](https://github.com/user-attachments/assets/b647a842-5f15-4863-92dd-73b57dd09b3c)
 - **GitHub Actions** for continuous deployment
+
 ![Screenshot 2024-11-11 231020](https://github.com/user-attachments/assets/887fa6fe-8e7e-4d3d-b6c7-58c8d9dc3b6b)
+
 - **GitHub** for version control
 
 -------------------------------------------------------------------------------------------------------------------------------------------
