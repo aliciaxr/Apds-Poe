@@ -13,23 +13,11 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
 
-  sonarqube:
+   sonarqube:
     docker:
-      - image: cimg/base:current  # Base image for your job
+      - image: sonarsource/sonar-scanner-cli:latest  # Use SonarScanner Docker image
     steps:
       - checkout
-      - run:
-          name: Install SonarScanner
-          command: |
-            curl -sS https://downloads.sonarsource.com/sonar-scanner-cli/sonar-scanner-5.0.1-linux.zip -o sonar-scanner.zip
-            unzip sonar-scanner.zip -d /opt
-            export PATH=$PATH:/opt/sonar-scanner-5.0.1-linux/bin
-            sonar-scanner --version
-
-      - run:
-          name: Find files (Optional)
-          command: "find ."
-
       - run:
           name: Run SonarScanner
           command: |
