@@ -10,13 +10,14 @@ jobs:
     steps:
       - checkout  # Check out the code from the repository
       - run:
+          name: List files to verify directory structure
+          command: |
+            echo "Current directory: $(pwd)"
+            ls -alh  # List all files and directories in the current directory
+      - run:
           name: Install Dependencies
           command: |
-            echo "Checking node and npm versions"
-            node -v
-            npm -v
-            echo "Installing dependencies with verbose output"
-            npm install --verbose  # Added --verbose for debugging
+            npm install --verbose  # Install dependencies from the root directory where package.json is located
       - run:
           name: Run Tests
           command: npm test
