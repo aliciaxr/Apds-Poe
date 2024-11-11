@@ -4,7 +4,7 @@ const Employee = require('../models/Employee');
 
 async function addEmployee() {
     try {
-        // Hash the password
+        // Hash the password with salt 
         const password = await bcrypt.hash('Employee1234!', 10);
 
         // Create the new employee

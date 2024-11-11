@@ -37,7 +37,7 @@ router.post(
     const { fullName, idNumber, accountNumber, password } = req.body;
 
     try {
-      // hash password
+      // hash password and salt
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // create new customer in db
