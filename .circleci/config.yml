@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  sonarcloud: sonarsource/sonarcloud@2.0.0
+  sonarcloud: sonarsource/sonarcloud@2.0.0  # Using the correct version of the SonarCloud orb
 
 jobs:
   build:
@@ -21,10 +21,12 @@ jobs:
           name: Install dependencies in customer-portal
           command: |
             cd /home/circleci/project/customer-portal && npm install  # Install dependencies from customer-portal
-      - sonarcloud/scan:  # This will automatically pull the project key and organization from the environment variables
+      - sonarcloud/scan:
+          # The orb will automatically pick up the configuration from sonar-project.properties in the root directory
+          # No need to specify projectKey or organization if they are set in your environment variables
 
 workflows:
   main:
     jobs:
       - build:
-          context: SonarCloud
+          context: SonarCloud  # Ensure SonarCloud context is correctly set up in CircleCI (for environment variables)
