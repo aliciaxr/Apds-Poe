@@ -21,8 +21,10 @@ jobs:
           name: Install dependencies in customer-portal
           command: |
             cd /home/circleci/project/customer-portal && npm install  # Install dependencies from customer-portal
-      - sonarcloud/scan  # Run SonarCloud scan after the build
-
+      - sonarcloud/scan:
+          projectKey: ${SONAR_PROJECT_KEY}           # Replace with your actual project key
+          organization: ${SONAR_ORG}  # Replace with your actual organization name (use the correct environment variable)
+          
 workflows:
   main:
     jobs:
