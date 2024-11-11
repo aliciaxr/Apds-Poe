@@ -13,7 +13,7 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
 
-   sonarqube:
+  sonarqube:
     docker:
       - image: sonarsource/sonar-scanner-cli:latest  # Use SonarScanner Docker image
     steps:
