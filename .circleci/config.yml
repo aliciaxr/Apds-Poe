@@ -1,43 +1,25 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5
+  sonarcloud: sonarsource/sonarcloud@2.0.0  # SonarCloud official orb
 
 jobs:
-  say-hello:
+  build:
     docker:
-      - image: cimg/base:current  # Base image
+      - image: 'cimg/base:stable'  # Use an image that suits your project's language (replace with an appropriate one)
     steps:
-      - checkout
+      - checkout  # Pull the code from your repository
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
-
-  sonarqube:
-    docker:
-      - image: sonarsource/sonar-scanner-cli:latest  # Use SonarScanner Docker image
-    steps:
-      - checkout
-      - run:
-          name: Run SonarScanner
+          name: Install dependencies and build project
           command: |
-            SONAR_BRANCH="${CIRCLE_BRANCH:-master}"
-            echo "Sonar branch value is : " $SONAR_BRANCH
-            echo "Sonar org value is: $SONAR_ORG"
-            sonar-scanner \
-              -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
-              -Dsonar.organization="$SONAR_ORG" \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.exclusions="**/android/**,**/ios/**" \
-              -Dsonar.login="$SONAR_TOKEN" \
-              -Dsonar.branch.name="$SONAR_BRANCH" \
-              -Dsonar.sources="."
+            # Add your project-specific install and build commands here
+            # For example, for Node.js, you would use `npm install` and `npm run build`
+            npm install
+            npm run build
+      - sonarcloud/scan  # SonarCloud scan command
 
 workflows:
-  version: 2
-  say-hello-workflow:
+  main:
     jobs:
-      - say-hello
-      - sonarqube:
-          requires:
-            - say-hello
+      - build:
+          context: SonarCloud  # Use the SonarCloud context with the SONAR_TOKEN environment variable
