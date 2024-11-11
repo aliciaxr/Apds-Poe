@@ -1,53 +1,28 @@
 version: 2.1
 
 orbs:
+  sonarqube: sonarsource/sonarqube@2.0
   node: circleci/node@5.2
 
 jobs:
   custom-test:
     docker:
-      - image: cimg/node:16.10  # Use the CircleCI Node.js Docker image
+      - image: cimg/node:16.10
     steps:
-      - checkout  # Check out the code from the repository
+      - checkout
       - run:
-          name: List files to verify directory structure
+          name: Install dependencies
           command: |
-            echo "Current directory: $(pwd)"
-            ls -alh  # List all files and directories in the current directory
-      - run:
-          name: Change to customer-portal directory and install dependencies
-          command: |
-            cd customer-portal  # Move into the customer-portal directory where package.json is located
-            npm install --verbose  # Install dependencies
-      - run:
-          name: Install SonarQube Scanner manually
-          command: |
-            # Install unzip and curl if not already installed
-            sudo apt-get update && sudo apt-get install -y unzip curl
-            # Download SonarQube Scanner
-            curl -L https://github.com/SonarSource/sonar-scanner-cli/releases/download/4.8.0.2856/sonar-scanner-4.8.0.2856-linux.zip -o sonar-scanner.zip
-            # Verify if the file was downloaded successfully
-            ls -lh sonar-scanner.zip
-            # Extract the downloaded zip file
-            unzip sonar-scanner.zip -d /opt/
-            # Set up environment variables for SonarQube scanner
-            echo 'export PATH=$PATH:/opt/sonar-scanner-4.8.0.2856-linux/bin' >> $BASH_ENV
-            source $BASH_ENV
-            # Check if SonarQube scanner is installed correctly
-            sonar-scanner --version
-      - run:
-          name: Run SonarQube Scan
-          command: |
-            cd customer-portal  # Ensure you're in the correct directory
-            sonar-scanner \
-              -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-              -Dsonar.organization=${SONAR_ORG_KEY} \
-              -Dsonar.sources=. \
-              -Dsonar.host.url=${SONAR_HOST_URL} \
-              -Dsonar.login=${SONAR_TOKEN}
+            cd customer-portal
+            npm install
+      - sonarqube/scan:
+          sonar-project-key: ${SONAR_PROJECT_KEY}
+          sonar-organization: ${SONAR_ORG_KEY}
+          sonar-host-url: ${SONAR_HOST_URL}
+          sonar-login: ${SONAR_TOKEN}
 
 workflows:
   version: 2
-  sample:
+  build:
     jobs:
       - custom-test
