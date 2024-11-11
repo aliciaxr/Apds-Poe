@@ -1,25 +1,23 @@
 version: 2.1
 
 orbs:
-  sonarcloud: sonarsource/sonarcloud@2.0.0  # SonarCloud official orb
+  sonarcloud: sonarsource/sonarcloud@2.0.0
 
 jobs:
   build:
     docker:
-      - image: 'cimg/base:stable'  
+      - image: cimg/node:16.14  # Node.js Docker image
     steps:
-      - checkout 
+      - checkout
       - run:
           name: Install dependencies and build project
           command: |
-            # Add your project-specific install and build commands here
-            # For example, for Node.js, you would use `npm install` and `npm run build`
-            npm install
-            npm run build
-      - sonarcloud/scan  
+            npm install  # Install Node.js dependencies
+            npm run build  # Build the project (if you have a build script)
+      - sonarcloud/scan
 
 workflows:
   main:
     jobs:
       - build:
-          context: SonarCloud  
+          context: SonarCloud
