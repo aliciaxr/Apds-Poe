@@ -11,7 +11,12 @@ jobs:
       - checkout  # Check out the code from the repository
       - run:
           name: Install Dependencies
-          command: npm install
+          command: |
+            echo "Checking node and npm versions"
+            node -v
+            npm -v
+            echo "Installing dependencies with verbose output"
+            npm install --verbose  # Added --verbose for debugging
       - run:
           name: Run Tests
           command: npm test
