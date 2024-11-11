@@ -7,13 +7,14 @@ jobs:
   build:
     docker:
       - image: cimg/node:16.14
+    working_directory: /home/circleci/project/customer-portal  # Update this to point to customer-portal
     steps:
       - checkout
       - run:
           name: Install dependencies and build project
           command: |
-            npm install
-            npm run build
+            npm install  
+            npm run build  
       - sonarcloud/scan
 
 workflows:
