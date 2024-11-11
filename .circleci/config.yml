@@ -1,28 +1,11 @@
-version: 2.1
-
-orbs:
-  sonarqube: sonarsource/sonarqube@2.0
-  node: circleci/node@5.2
-
 jobs:
-  custom-test:
+  build:
     docker:
-      - image: cimg/node:16.10
+      - image: cimg/python:3.9
     steps:
       - checkout
       - run:
-          name: Install dependencies
+          name: Clear cache and re-run
           command: |
-            cd customer-portal
-            npm install
-      - sonarqube/scan:
-          sonar-project-key: ${SONAR_PROJECT_KEY}
-          sonar-organization: ${SONAR_ORG_KEY}
-          sonar-host-url: ${SONAR_HOST_URL}
-          sonar-login: ${SONAR_TOKEN}
-
-workflows:
-  version: 2
-  build:
-    jobs:
-      - custom-test
+            circleci cache clear
+            circleci build
