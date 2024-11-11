@@ -15,15 +15,19 @@ jobs:
             echo "Current directory: $(pwd)"
             ls -alh  # List all files and directories in the current directory
       - run:
-          name: Install Dependencies
+          name: Change to customer-portal directory and install dependencies
           command: |
-            npm install --verbose  # Install dependencies from the root directory where package.json is located
+            cd customer-portal  # Move into the customer-portal directory where package.json is located
+            npm install --verbose  # Install dependencies
       - run:
           name: Run Tests
-          command: npm test
+          command: |
+            cd customer-portal  # Ensure you're in the correct directory
+            npm test
       - run:
           name: SonarQube Scan
           command: |
+            cd customer-portal  # Ensure you're in the correct directory
             sonar-scanner \
               -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
               -Dsonar.organization=${SONAR_ORG_KEY} \
