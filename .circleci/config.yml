@@ -6,14 +6,14 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/node:16.14 
+      - image: cimg/node:16.14
     steps:
       - checkout
       - run:
           name: Install dependencies and build project
           command: |
-            npm install  # Install Node.js dependencies
-            npm run build  # Build the project (if you have a build script)
+            npm install
+            npm run build
       - sonarcloud/scan
 
 workflows:
