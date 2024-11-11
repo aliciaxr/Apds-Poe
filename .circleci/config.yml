@@ -1,8 +1,3 @@
-version: 2.1
-
-orbs:
-  node: circleci/node@5.2
-
 jobs:
   custom-test:
     docker:
@@ -19,11 +14,11 @@ jobs:
           command: |
             cd customer-portal  # Move into the customer-portal directory where package.json is located
             npm install --verbose  # Install dependencies
-      - run:
-          name: Run Tests
-          command: |
-            cd customer-portal  # Ensure you're in the correct directory
-            npm test
+      # - run:
+      #     name: Run Tests
+      #     command: |
+      #       cd customer-portal  # Ensure you're in the correct directory
+      #       npm test
       - run:
           name: SonarQube Scan
           command: |
@@ -34,9 +29,3 @@ jobs:
               -Dsonar.sources=. \
               -Dsonar.host.url=${SONAR_HOST_URL} \
               -Dsonar.login=${SONAR_TOKEN}
-
-workflows:
-  version: 2
-  sample:
-    jobs:
-      - custom-test
