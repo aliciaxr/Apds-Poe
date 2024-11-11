@@ -21,7 +21,9 @@ jobs:
           name: Install dependencies in customer-portal
           command: |
             cd /home/circleci/project/customer-portal && npm install  # Install dependencies from customer-portal
-      - sonarcloud/scan:  # No need to define anything here, orb will fetch from environment vars or sonar-project.properties
+      - sonarcloud/scan:
+          projectKey: ${SONAR_PROJECT_KEY}   # Set from CircleCI environment variable
+          organization: ${SONAR_ORG_KEY}     # Set from CircleCI environment variable
 
 workflows:
   main:
