@@ -6,9 +6,9 @@ orbs:
 jobs:
   build:
     docker:
-      - image: 'cimg/base:stable'  # Use an image that suits your project's language (replace with an appropriate one)
+      - image: 'cimg/base:stable'  
     steps:
-      - checkout  # Pull the code from your repository
+      - checkout 
       - run:
           name: Install dependencies and build project
           command: |
@@ -16,10 +16,10 @@ jobs:
             # For example, for Node.js, you would use `npm install` and `npm run build`
             npm install
             npm run build
-      - sonarcloud/scan  # SonarCloud scan command
+      - sonarcloud/scan  
 
 workflows:
   main:
     jobs:
       - build:
-          context: SonarCloud  # Use the SonarCloud context with the SONAR_TOKEN environment variable
+          context: SonarCloud  
