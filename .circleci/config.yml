@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       - image: cimg/node:16.14
-    working_directory: /home/circleci/project/customer-portal  # Update this to point to customer-portal
+    working_directory: customer-portal  # Update this to point to customer-portal
     steps:
       - checkout
       - run:
